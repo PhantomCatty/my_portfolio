@@ -9,6 +9,12 @@ import {
 } from 'lucide-react';
 import profilePic from './assets/profile.png';
 
+const getAssetUrl = (path) => {
+  if (!path) return '';
+  if (path.startsWith('http') || path.startsWith('data:')) return path;
+  return new URL(`./assets/${path}`, import.meta.url).href;
+};
+
 const ThemeContext = createContext({ theme: 'dark', toggleTheme: () => {} });
 const useTheme = () => useContext(ThemeContext);
 
@@ -73,7 +79,11 @@ I believe: "**Not everyone has the ability to obtain love, but everyone is worth
 Astalia is my response to this demand. By combining the immediate companionship of live streaming with the deep interactivity of game mechanics, I aim to build a narrative space that offers emotional repair and questions the ethics of virtual-physical connections.
 
     `,
-    stats: { complexity: 'S', visual: 'S+', perf: 'A' },
+    contentCards: [
+      { type: 'link', content: 'https://phantomcatty.github.io/Astalia_Stellaris/', description: 'View Project Website' },
+      { type: 'image', content: 'img1_1.png' },
+      { type: 'image', content: 'img1_2.png' },
+    ],
     previewColor: '#60A5FA' 
   },
   {
@@ -94,7 +104,10 @@ Contract of Fate is a 3D Idle Card RPG featuring anime-style aesthetics and stra
 *	Production Management: Beyond design, I acted as a central hub for project coordination. Using Feishu/Lark, I streamlined communication between departments, resulting in a perfect on-time delivery record for the modules under my supervision.
 
     `,
-    stats: { complexity: 'S+', visual: 'B', perf: 'S+' },
+    contentCards: [
+      { type: 'link', content: 'https://play.google.com/store/apps/details?id=com.mover.twmysq&pli=1', description: 'View on Google Play' },
+      { type: 'image', content: 'img2_1.png' },
+    ],
     previewColor: '#A78BFA' 
   },
   {
@@ -115,8 +128,11 @@ This is a solo project. I was responsible for all code architecture, system desi
 * Note on Visuals: Some visual assets were generated using AI tools to allow me to focus entirely on system architecture and gameplay logic verification.
 
     `,
-
-stats: { complexity: 'A', visual: 'A', perf: 'S' },
+    contentCards: [
+      { type: 'link', content: 'https://nekokop.itch.io/nekos-war', description: 'View on Itch.io' },
+      { type: 'image', content: 'img3_1.png' },
+      { type: 'image', content: 'img3_2.png' },
+    ],
     previewColor: '#F472B6' 
   },
   {
@@ -139,7 +155,10 @@ Technical: Architecture & AI
 *	FSM AI Behavior: Developed complex Boss AI using Finite State Machines (FSM), allowing for dynamic phase transitions and predictable yet challenging attack patterns.
 
     `,
-    stats: { complexity: 'B', visual: 'A', perf: 'A' },
+    contentCards: [
+      { type: 'image', content: 'img3_1.png' },
+      { type: 'image', content: 'img3_2.png' },
+    ],
     previewColor: '#34D399' 
   },
 ];
@@ -456,12 +475,11 @@ const SkillConstellation = () => {
 
   return (
     <div className="w-full h-full flex flex-col items-center justify-center relative">
-      <div className="absolute top-8 left-8">
-        <h2 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-pink-300">TECH STACK</h2>
-        <p className={`text-xs font-mono mt-1 tracking-widest ${theme === 'dark' ? 'text-white/40' : 'text-slate-500'}`}>SKILL DEPENDENCY GRAPH</p>
-      </div>
-
       <div className="relative w-full max-w-4xl lg:max-w-6xl xl:max-w-7xl aspect-square max-h-[85vh]">
+        <div className="absolute top-4 left-4 md:top-8 md:left-8 z-10 pointer-events-none">
+          <h2 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-pink-300">TECH STACK</h2>
+          <p className={`text-xs font-mono mt-1 tracking-widest ${theme === 'dark' ? 'text-white/40' : 'text-slate-500'}`}>SKILL DEPENDENCY GRAPH</p>
+        </div>
         <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-[0_0_20px_rgba(96,165,250,0.2)]">
           <circle cx="50" cy="50" r="30" fill="none" stroke={theme === 'dark' ? "rgba(255,255,255,0.03)" : "rgba(0,0,0,0.05)"} />
           <circle cx="50" cy="50" r="45" fill="none" stroke={theme === 'dark' ? "rgba(255,255,255,0.03)" : "rgba(0,0,0,0.05)"} strokeDasharray="4 4" />
@@ -537,14 +555,14 @@ const SkillConstellation = () => {
                 }}
                 className={`absolute z-50 pointer-events-none -mt-6 ${isRight ? 'mr-6' : 'ml-6'}`}
               >
-                <div className={`border px-4 py-3 rounded-xl backdrop-blur-xl shadow-[0_0_30px_rgba(59,130,246,0.2)] min-w-[140px] w-max max-w-[380px] ${theme === 'dark' ? 'bg-slate-900/95 border-blue-500/30' : 'bg-white/95 border-blue-500/20'}`}>
-                  <div className={`text-sm font-bold tracking-wide ${theme === 'dark' ? 'text-blue-100' : 'text-blue-900'}`}>{node.label}</div>
+                <div className={`border px-6 py-5 rounded-xl backdrop-blur-xl shadow-[0_0_30px_rgba(59,130,246,0.2)] min-w-[140px] w-max max-w-[380px] ${theme === 'dark' ? 'bg-slate-900/95 border-blue-500/30' : 'bg-white/95 border-blue-500/20'}`}>
+                  <div className={`text-xl font-bold tracking-wide ${theme === 'dark' ? 'text-blue-100' : 'text-blue-900'}`}>{node.label}</div>
                   {node.level && (
-                    <div className="text-[10px] text-blue-300/80 font-mono mt-1 bg-blue-500/10 inline-block px-1.5 py-0.5 rounded">
+                    <div className="text-sm text-blue-300/80 font-mono mt-2 bg-blue-500/10 inline-block px-2 py-1 rounded">
                       {node.level}
                     </div>
                   )}
-                  <div className={`text-[9px] font-mono mt-2 uppercase tracking-widest ${theme === 'dark' ? 'text-white/30' : 'text-slate-400'}`}>
+                  <div className={`text-xs font-mono mt-3 uppercase tracking-widest leading-relaxed ${theme === 'dark' ? 'text-white/30' : 'text-slate-400'}`}>
                     {node.desc || `${node.category} NODE`}
                   </div>
                 </div>
@@ -569,10 +587,33 @@ const SkillConstellation = () => {
 // 4. View: Inventory (Removed AI)
 const Inventory = () => {
   const [selectedItem, setSelectedItem] = useState(null);
+  const [lightboxImage, setLightboxImage] = useState(null);
   const { theme } = useTheme();
 
   return (
-    <div className="w-full h-full max-w-[1600px] mx-auto flex p-8 lg:p-12 gap-8 lg:gap-12 box-border">
+    <div className="w-full h-full max-w-[1600px] mx-auto flex p-8 lg:p-12 gap-8 lg:gap-12 box-border relative">
+      {/* Lightbox Overlay */}
+      <AnimatePresence>
+        {lightboxImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setLightboxImage(null)}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-8 cursor-zoom-out"
+          >
+            <motion.img
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              src={lightboxImage}
+              alt="Full Preview"
+              className="max-w-full max-h-full object-contain rounded-lg shadow-2xl border border-white/10"
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Left: List (Wide Cards) */}
       <div className="flex-1 flex flex-col min-w-0">
          <header className={`mb-6 border-b pb-2 flex justify-between items-end ${theme === 'dark' ? 'border-white/10' : 'border-black/10'}`}>
@@ -644,23 +685,23 @@ const Inventory = () => {
                 key={item.id}
                 layoutId={item.id}
                 onClick={() => setSelectedItem(item)}
-                className={`w-full rounded-xl relative cursor-pointer group transition-all duration-300 border overflow-hidden flex flex-row h-28 shrink-0 ${borderShadowClass} ${bgClass}`}
+                className={`w-full rounded-xl relative cursor-pointer group transition-all duration-300 border overflow-hidden flex flex-row h-44 shrink-0 ${borderShadowClass} ${bgClass}`}
                 whileHover={{ x: 5 }}
               >
                 {/* Thumbnail */}
-                <div className={`w-32 h-full flex items-center justify-center border-r relative overflow-hidden shrink-0 ${theme === 'dark' ? 'bg-black/20 border-white/5' : 'bg-black/5 border-black/5'}`}>
+                <div className={`w-40 h-full flex items-center justify-center border-r relative overflow-hidden shrink-0 ${theme === 'dark' ? 'bg-black/20 border-white/5' : 'bg-black/5 border-black/5'}`}>
                    <div className="absolute inset-0 opacity-20" style={{backgroundColor: item.previewColor}} />
-                   <Database size={24} className={theme === 'dark' ? 'text-white/20' : 'text-black/20'} />
+                   <Database size={28} className={theme === 'dark' ? 'text-white/20' : 'text-black/20'} />
                 </div>
 
                 {/* Content */}
-                <div className="flex-1 p-4 flex flex-col justify-center relative min-w-0">
-                  <div className="flex justify-between items-center mb-1">
-                    <div className={`text-base font-bold tracking-wide truncate ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>{item.name}</div>
-                    <div className={`text-[9px] font-bold px-2 py-0.5 rounded shrink-0 ml-2 ${theme === 'dark' ? 'bg-white/10 text-white/80' : 'bg-black/10 text-slate-700'}`}>{item.platform}</div>
+                <div className="flex-1 p-5 flex flex-col justify-center relative min-w-0">
+                  <div className="flex justify-between items-center mb-2">
+                    <div className={`text-xl font-bold tracking-wide truncate ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>{item.name}</div>
+                    <div className={`text-xs font-bold px-2 py-0.5 rounded shrink-0 ml-2 ${theme === 'dark' ? 'bg-white/10 text-white/80' : 'bg-black/10 text-slate-700'}`}>{item.platform}</div>
                   </div>
-                  <div className={`text-[10px] font-mono mb-1 ${theme === 'dark' ? 'text-blue-200/60' : 'text-blue-600/60'}`}>{item.role} // {item.type}</div>
-                  <p className={`text-[10px] line-clamp-2 w-11/12 ${theme === 'dark' ? 'text-white/50' : 'text-slate-500'}`}>{item.desc}</p>
+                  <div className={`text-xs font-mono mb-2 ${theme === 'dark' ? 'text-blue-200/60' : 'text-blue-600/60'}`}>{item.role} // {item.type}</div>
+                  <p className={`text-xs line-clamp-4 w-11/12 ${theme === 'dark' ? 'text-white/50' : 'text-slate-500'}`}>{item.desc}</p>
                 </div>
               </motion.div>
             );
@@ -676,22 +717,22 @@ const Inventory = () => {
             initial={{ x: 20, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: 20, opacity: 0 }}
-            className={`w-96 lg:w-[32rem] xl:w-[36rem] backdrop-blur-md border rounded-2xl p-6 lg:p-10 flex flex-col relative shadow-xl h-full ${theme === 'dark' ? 'bg-slate-900/60 border-white/10' : 'bg-white/60 border-black/10'}`}
+            className={`w-[28rem] lg:w-[36rem] xl:w-[40rem] backdrop-blur-md border rounded-2xl p-6 lg:p-10 flex flex-col relative shadow-xl h-full overflow-y-auto custom-scrollbar ${theme === 'dark' ? 'bg-slate-900/60 border-white/10' : 'bg-white/60 border-black/10'}`}
           >
              <div className="mt-2 mb-6">
-                <div className={`w-12 h-12 rounded-lg mb-4 flex items-center justify-center border shadow-lg ${theme === 'dark' ? 'border-white/10' : 'border-black/10'}`} style={{backgroundColor: `${selectedItem.previewColor}20`, borderColor: selectedItem.previewColor}}>
-                   <Layers size={24} style={{color: selectedItem.previewColor}} />
+                <div className={`w-16 h-16 rounded-lg mb-4 flex items-center justify-center border shadow-lg ${theme === 'dark' ? 'border-white/10' : 'border-black/10'}`} style={{backgroundColor: `${selectedItem.previewColor}20`, borderColor: selectedItem.previewColor}}>
+                   <Layers size={32} style={{color: selectedItem.previewColor}} />
                 </div>
-                <h3 className={`text-2xl font-bold mb-2 leading-tight ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>{selectedItem.name}</h3>
-                <div className="flex flex-wrap gap-2 text-[9px] font-mono">
+                <h3 className={`text-4xl font-bold mb-3 leading-tight ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>{selectedItem.name}</h3>
+                <div className="flex flex-wrap gap-2 text-xs font-mono">
                    {selectedItem.tag && selectedItem.tag.map((tag, i) => (
                       <span key={i} className={`px-2 py-1 rounded ${theme === 'dark' ? 'bg-blue-500/20 text-blue-200' : 'bg-blue-100 text-blue-700'}`}>{tag}</span>
                    ))}
                 </div>
              </div>
 
-             <div className={`p-4 rounded-xl border mb-6 ${theme === 'dark' ? 'bg-white/5 border-white/5' : 'bg-white/40 border-black/5'}`}>
-                 <div className={`text-xs leading-relaxed ${theme === 'dark' ? 'text-gray-300' : 'text-slate-600'}`}>
+             <div className={`p-5 rounded-xl border mb-6 ${theme === 'dark' ? 'bg-white/5 border-white/5' : 'bg-white/40 border-black/5'}`}>
+                 <div className={`text-sm leading-relaxed ${theme === 'dark' ? 'text-gray-300' : 'text-slate-600'}`}>
                    <ReactMarkdown
                      components={{
                        ul: ({node, ...props}) => <ul className="list-disc list-inside my-2 space-y-1" {...props} />,
@@ -706,20 +747,43 @@ const Inventory = () => {
                  </div>
              </div>
 
-             {/* Stats */}
-             <div className="space-y-3 mb-6">
-               {Object.entries(selectedItem.stats).map(([key, val]) => (
-                  <div key={key} className="flex items-center gap-3">
-                    <span className={`text-[9px] uppercase w-16 ${theme === 'dark' ? 'text-white/40' : 'text-slate-400'}`}>{key}</span>
-                    <div className={`flex-1 h-1 rounded-full overflow-hidden ${theme === 'dark' ? 'bg-white/10' : 'bg-black/10'}`}>
-                       <motion.div 
-                          initial={{ width: 0 }}
-                          animate={{ width: val.includes('S') ? '100%' : '75%' }}
-                          className="h-full bg-gradient-to-r from-blue-400 to-purple-400"
-                       />
-                    </div>
-                    <span className={`text-[10px] font-bold ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>{val}</span>
-                  </div>
+             {/* Content Cards */}
+             <div className="flex flex-col gap-4 mb-6">
+               {selectedItem.contentCards && selectedItem.contentCards.map((card, idx) => (
+                 <div key={idx} className={`relative rounded-xl overflow-hidden border group ${theme === 'dark' ? 'border-white/10 bg-white/5' : 'border-black/10 bg-white/40'}`}>
+                   {/* Badge */}
+                   <div className={`absolute top-0 right-0 px-3 py-1.5 text-xs font-bold uppercase tracking-wider rounded-bl-lg z-10 ${theme === 'dark' ? 'bg-white/10 text-white/60' : 'bg-black/10 text-slate-600'}`}>
+                      {card.type}
+                   </div>
+
+                   {card.type === 'image' ? (
+                     <div 
+                       className="cursor-zoom-in"
+                       onClick={() => setLightboxImage(getAssetUrl(card.content))}
+                     >
+                       <img src={getAssetUrl(card.content)} alt="Project Media" className="w-full h-auto object-cover" />
+                     </div>
+                   ) : card.type === 'link' ? (
+                      <a 
+                        href={card.content} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className={`block p-5 flex items-center gap-4 transition-colors ${theme === 'dark' ? 'hover:bg-white/5' : 'hover:bg-black/5'}`}
+                      >
+                        <div className={`p-3 rounded-full ${theme === 'dark' ? 'bg-blue-500/20 text-blue-300' : 'bg-blue-100 text-blue-600'}`}>
+                           <Zap size={20} />
+                        </div>
+                        <div>
+                           <div className={`text-sm font-bold ${theme === 'dark' ? 'text-blue-200' : 'text-blue-700'}`}>{card.description}</div>
+                           <div className={`text-xs font-mono truncate max-w-[240px] opacity-50 ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>{card.content}</div>
+                        </div>
+                      </a>
+                   ) : (
+                     <div className={`p-5 pt-8 text-sm leading-relaxed ${theme === 'dark' ? 'text-gray-300' : 'text-slate-600'}`}>
+                       {card.content}
+                     </div>
+                   )}
+                 </div>
                ))}
              </div>
           </motion.div>
@@ -727,10 +791,10 @@ const Inventory = () => {
           <motion.div 
             key="empty"
             initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-            className={`w-96 lg:w-[32rem] xl:w-[36rem] border rounded-2xl flex flex-col items-center justify-center gap-4 ${theme === 'dark' ? 'border-white/5 text-white/20' : 'border-black/5 text-slate-300'}`}
+            className={`w-[28rem] lg:w-[36rem] xl:w-[40rem] border rounded-2xl flex flex-col items-center justify-center gap-4 ${theme === 'dark' ? 'border-white/5 text-white/20' : 'border-black/5 text-slate-300'}`}
           >
-            <Layers size={40} />
-            <span className="text-xs tracking-widest">SELECT PROJECT FILE</span>
+            <Layers size={48} />
+            <span className="text-sm tracking-widest">SELECT PROJECT FILE</span>
           </motion.div>
         )}
       </AnimatePresence>
@@ -743,7 +807,7 @@ const Dashboard = () => {
   const { theme } = useTheme();
 
   return (
-    <div className="flex h-full items-center justify-center gap-12 lg:gap-32 px-8 lg:px-24 max-w-[1600px] mx-auto">
+    <div className="flex h-full items-center justify-center gap-16 lg:gap-40 px-12 lg:px-32 max-w-[1800px] mx-auto">
       {/* Profile Visual */}
       <motion.div 
         initial={{ opacity: 0, scale: 0.9 }}
@@ -752,7 +816,7 @@ const Dashboard = () => {
         className="relative group"
       >
          {/* Magic Circle */}
-         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] pointer-events-none opacity-20">
+         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] pointer-events-none opacity-20">
             <svg viewBox="0 0 100 100" className="w-full h-full animate-[spin_40s_linear_infinite]">
                <circle cx="50" cy="50" r="48" fill="none" stroke="#60A5FA" strokeWidth="0.1" strokeDasharray="2 4" />
                <circle cx="50" cy="50" r="35" fill="none" stroke="#F472B6" strokeWidth="0.1" />
@@ -760,56 +824,56 @@ const Dashboard = () => {
          </div>
 
          {/* ID Card Style */}
-         <div className={`w-64 h-96 rounded-xl overflow-hidden border relative shadow-2xl flex flex-col items-center pt-2 transition-colors duration-300 ${theme === 'dark' ? 'border-white/10 bg-gradient-to-b from-slate-900 to-slate-950' : 'border-black/10 bg-gradient-to-b from-white to-slate-100'}`}>
-            <div className={`w-56 h-64 rounded-lg border-2 mb-2 flex items-center justify-center relative overflow-hidden group-hover:border-blue-400/30 transition-colors ${theme === 'dark' ? 'border-white/10 bg-white/5' : 'border-black/10 bg-black/5'}`}>
+         <div className={`w-80 h-[30rem] rounded-xl overflow-hidden border relative shadow-2xl flex flex-col items-center pt-4 transition-colors duration-300 ${theme === 'dark' ? 'border-white/10 bg-gradient-to-b from-slate-900 to-slate-950' : 'border-black/10 bg-gradient-to-b from-white to-slate-100'}`}>
+            <div className={`w-72 h-80 rounded-lg border-2 mb-4 flex items-center justify-center relative overflow-hidden group-hover:border-blue-400/30 transition-colors ${theme === 'dark' ? 'border-white/10 bg-white/5' : 'border-black/10 bg-black/5'}`}>
                {/* Personal Image Placeholder */}
                <img 
                  src={USER_PROFILE.avatar} 
                  alt="Profile" 
-                 className="w-full h-full object-cover object-top translate-y-2 opacity-80 group-hover:opacity-100 transition-all"
+                 className="w-full h-full object-cover object-top translate-y-0 opacity-80 group-hover:opacity-100 transition-all"
                />
                {/* Scanline effect */}
                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-blue-400/10 to-transparent animate-scan" style={{height: '50%'}} />
             </div>
             
             <div className="text-center px-4">
-               <div className={`text-xl font-bold tracking-widest mb-2 ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>{USER_PROFILE.name}</div>
-               <div className={`flex justify-center gap-4 ${theme === 'dark' ? 'text-white/40' : 'text-slate-500'}`}>
-                  <Code size={16} />
-                  <Terminal size={16} />
-                  <Feather size={16} />
+               <div className={`text-2xl font-bold tracking-widest mb-3 ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>{USER_PROFILE.name}</div>
+               <div className={`flex justify-center gap-6 ${theme === 'dark' ? 'text-white/40' : 'text-slate-500'}`}>
+                  <Code size={20} />
+                  <Terminal size={20} />
+                  <Feather size={20} />
                </div>
             </div>
 
-            <div className={`mt-auto w-full py-3 flex justify-center text-[10px] font-mono border-t ${theme === 'dark' ? 'bg-white/5 text-white/50 border-white/5' : 'bg-black/5 text-slate-500 border-black/5'}`}>
+            <div className={`mt-auto w-full py-4 flex justify-center text-xs font-mono border-t ${theme === 'dark' ? 'bg-white/5 text-white/50 border-white/5' : 'bg-black/5 text-slate-500 border-black/5'}`}>
                <span>ID: {USER_PROFILE.id}</span>
             </div>
          </div>
       </motion.div>
 
       {/* Text Info */}
-      <div className="max-w-lg lg:max-w-2xl xl:max-w-3xl">
-         <div className="flex items-center gap-3 mb-8 opacity-50">
-            <Shield size={16} className="text-blue-300" />
+      <div className="max-w-xl lg:max-w-3xl xl:max-w-4xl">
+         <div className="flex items-center gap-4 mb-10 opacity-50">
+            <Shield size={20} className="text-blue-300" />
             <div className={`h-px flex-1 ${theme === 'dark' ? 'bg-white/20' : 'bg-black/20'}`} />
-            <span className={`text-xs font-bold tracking-widest ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>PROFILE SUMMARY</span>
+            <span className={`text-sm font-bold tracking-widest ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>PROFILE SUMMARY</span>
          </div>
 
-         <h1 className={`text-5xl font-bold mb-6 leading-tight ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
+         <h1 className={`text-6xl lg:text-7xl font-bold mb-8 leading-tight ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
             Creative <br/>
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-pink-400">Technologist.</span>
          </h1>
          
-         <p className={`leading-relaxed font-sans text-sm mb-10 border-l-2 border-blue-500/30 pl-6 ${theme === 'dark' ? 'text-blue-100/70' : 'text-slate-600'}`}>
+         <p className={`leading-relaxed font-sans text-lg mb-12 border-l-4 border-blue-500/30 pl-8 ${theme === 'dark' ? 'text-blue-100/70' : 'text-slate-600'}`}>
             {USER_PROFILE.bio}
          </p>
 
          {/* Attributes */}
-         <div className="grid grid-cols-2 gap-x-8 gap-y-6">
+         <div className="grid grid-cols-2 gap-x-12 gap-y-8">
             {USER_PROFILE.attributes.map((attr, i) => (
               <div key={attr.label} className="group">
-                 <div className="flex justify-between items-end mb-2">
-                    <span className={`text-[10px] font-bold tracking-wider ${theme === 'dark' ? 'text-blue-200/60' : 'text-blue-600/60'}`}>{attr.label}</span>
+                 <div className="flex justify-between items-end mb-3">
+                    <span className={`text-xs font-bold tracking-wider ${theme === 'dark' ? 'text-blue-200/60' : 'text-blue-600/60'}`}>{attr.label}</span>
                  </div>
                  {/* Decorative Line */}
                  <div className={`h-px w-full relative overflow-hidden ${theme === 'dark' ? 'bg-white/10' : 'bg-black/10'}`}>
@@ -821,7 +885,7 @@ const Dashboard = () => {
                        style={{ color: attr.color }}
                     />
                  </div>
-                 <div className={`mt-2 text-[10px] font-mono tracking-wide ${theme === 'dark' ? 'text-white/40' : 'text-slate-500'}`}>
+                 <div className={`mt-3 text-sm font-mono tracking-wide ${theme === 'dark' ? 'text-white/40' : 'text-slate-500'}`}>
                     {attr.text}
                  </div>
               </div>
@@ -937,6 +1001,21 @@ export default function App() {
         </AnimatePresence>
       </div>
     </div>
+    <style>{`
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background-color: rgba(156, 163, 175, 0.5);
+        border-radius: 20px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background-color: rgba(156, 163, 175, 0.8);
+      }
+    `}</style>
     </ThemeContext.Provider>
   );
 }

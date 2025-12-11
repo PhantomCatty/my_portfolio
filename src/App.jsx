@@ -768,7 +768,7 @@ const Inventory = () => {
                         href={card.content} 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className={`block p-5 items-center gap-4 transition-colors ${theme === 'dark' ? 'hover:bg-white/5' : 'hover:bg-black/5'}`}
+                        className={`block p-5 flex items-center gap-4 transition-colors ${theme === 'dark' ? 'hover:bg-white/5' : 'hover:bg-black/5'}`}
                       >
                         <div className={`p-3 rounded-full ${theme === 'dark' ? 'bg-blue-500/20 text-blue-300' : 'bg-blue-100 text-blue-600'}`}>
                            <Zap size={20} />

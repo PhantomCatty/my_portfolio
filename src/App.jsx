@@ -134,6 +134,23 @@ This is a solo project. I was responsible for all code architecture, system desi
       { type: 'image', content: 'img3_1.png' },
       { type: 'image', content: 'img3_2.png' },
     ],
+    codeSnippets: [
+      {
+        fileName: 'AgentCharacter.cs',
+        language: 'csharp',
+        path: '/code-snippets/nekos-war/AgentCharacter.cs'
+      },
+      {
+        fileName: 'BuffCalculator.cs',
+        language: 'csharp',
+        path: '/code-snippets/nekos-war/BuffCalculator.cs'
+      },
+      {
+        fileName: 'StatModifier.cs',
+        language: 'csharp',
+        path: '/code-snippets/nekos-war/StatModifier.cs'
+      }
+    ],
     previewColor: '#F472B6' 
   },
   {
@@ -159,6 +176,13 @@ Technical: Architecture & AI
     contentCards: [
       { type: 'image', content: 'img3_1.png' },
       { type: 'image', content: 'img3_2.png' },
+    ],
+    codeSnippets: [
+      {
+        fileName: 'PolygonCropper.cs',
+        language: 'csharp',
+        path: '/code-snippets/sweetadv/PolygonCropper.cs'
+      }
     ],
     previewColor: '#34D399' 
   },
@@ -586,7 +610,7 @@ const SkillConstellation = () => {
 };
 
 // 4. View: Inventory (Removed AI)
-const Inventory = () => {
+const Inventory = ({ onOpenCode }) => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [lightboxImage, setLightboxImage] = useState(null);
   const { theme } = useTheme();
@@ -750,6 +774,27 @@ const Inventory = () => {
 
              {/* Content Cards */}
              <div className="flex flex-col gap-4 mb-6">
+               {selectedItem.codeSnippets && (
+                 <div 
+                   onClick={() => onOpenCode(selectedItem)}
+                   className={`relative rounded-xl overflow-hidden border group cursor-pointer transition-all hover:scale-[1.02] ${theme === 'dark' ? 'border-blue-500/30 bg-blue-900/10 hover:bg-blue-900/20' : 'border-blue-200 bg-blue-50 hover:bg-blue-100'}`}
+                 >
+                    <div className={`absolute top-0 right-0 px-3 py-1.5 text-xs font-bold uppercase tracking-wider rounded-bl-lg z-10 ${theme === 'dark' ? 'bg-blue-500/20 text-blue-200' : 'bg-blue-200 text-blue-700'}`}>
+                      SAMPLE CODE
+                    </div>
+                    <div className="p-5 flex items-center gap-4">
+                        <div className={`p-3 rounded-full ${theme === 'dark' ? 'bg-blue-500/20 text-blue-300' : 'bg-blue-100 text-blue-600'}`}>
+                           <Code size={20} />
+                        </div>
+                        <div>
+                           <div className={`text-sm font-bold ${theme === 'dark' ? 'text-blue-200' : 'text-blue-700'}`}>View Code Snippets</div>
+                           <div className={`text-xs font-mono opacity-50 ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
+                              {selectedItem.codeSnippets.length} script(s) available
+                           </div>
+                        </div>
+                    </div>
+                 </div>
+               )}
                {selectedItem.contentCards && selectedItem.contentCards.map((card, idx) => (
                  <div key={idx} className={`relative rounded-xl overflow-hidden border group ${theme === 'dark' ? 'border-white/10 bg-white/5' : 'border-black/10 bg-white/40'}`}>
                    {/* Badge */}
@@ -804,6 +849,162 @@ const Inventory = () => {
 };
 
 // 7. View: Dashboard (Professional Profile)
+const CodeViewer = ({ isOpen, onClose, project }) => {
+  const { theme } = useTheme();
+  const [activeFile, setActiveFile] = useState(null);
+  const [codeContent, setCodeContent] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (project?.codeSnippets?.length > 0) {
+      setActiveFile(project.codeSnippets[0]);
+    }
+  }, [project]);
+
+  useEffect(() => {
+    const fetchCode = async () => {
+      if (!activeFile?.path) return;
+      
+      setIsLoading(true);
+      try {
+        // Handle base URL for GitHub Pages or other sub-path deployments
+        const baseUrl = import.meta.env.BASE_URL;
+        // Remove leading slash if present to avoid double slashes with baseUrl
+        const cleanPath = activeFile.path.startsWith('/') ? activeFile.path.slice(1) : activeFile.path;
+        const fullPath = `${baseUrl}${cleanPath}`;
+
+        const response = await fetch(fullPath);
+        if (!response.ok) throw new Error(`Failed to load code: ${response.statusText}`);
+        const text = await response.text();
+        setCodeContent(text);
+      } catch (error) {
+        console.error(error);
+        setCodeContent(`// Error loading file content: ${error.message}`);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchCode();
+  }, [activeFile]);
+
+  if (!isOpen || !project) return null;
+
+  return (
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-[200] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 lg:p-12"
+      onClick={onClose}
+    >
+      <motion.div 
+        initial={{ scale: 0.95, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.95, opacity: 0 }}
+        className={`w-full h-full max-w-[1400px] rounded-xl overflow-hidden flex flex-col shadow-2xl border ${theme === 'dark' ? 'bg-[#1e1e1e] border-white/10' : 'bg-white border-black/10'}`}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Title Bar */}
+        <div className={`h-10 flex items-center justify-between px-4 border-b select-none ${theme === 'dark' ? 'bg-[#2d2d2d] border-black/20' : 'bg-slate-100 border-slate-200'}`}>
+          <div className="flex items-center gap-3">
+             <div className="flex gap-2 group cursor-pointer" onClick={onClose}>
+                <div className="w-3 h-3 rounded-full bg-red-500 group-hover:bg-red-600 transition-colors" />
+                <div className="w-3 h-3 rounded-full bg-yellow-500" />
+                <div className="w-3 h-3 rounded-full bg-green-500" />
+             </div>
+             <span className={`text-xs font-mono ml-4 opacity-70 ${theme === 'dark' ? 'text-white' : 'text-slate-700'}`}>{project.name}</span>
+          </div>
+          <div className={`text-xs font-mono opacity-50 ${theme === 'dark' ? 'text-white' : 'text-slate-700'}`}>
+            Read-Only Mode
+          </div>
+        </div>
+
+        {/* Main Content */}
+        <div className="flex-1 flex overflow-hidden">
+           {/* Sidebar */}
+           <div className={`w-64 flex-shrink-0 border-r flex flex-col ${theme === 'dark' ? 'bg-[#252526] border-black/20' : 'bg-slate-50 border-slate-200'}`}>
+              <div className="p-3 text-xs font-bold opacity-50 tracking-wider mb-2 px-4">EXPLORER</div>
+              <div className="flex-1 overflow-y-auto">
+                 <div className="px-4 py-1 text-xs font-bold opacity-70 mb-1 flex items-center gap-1">
+                    <span className="opacity-50">▼</span> {project.name.replace(/\s+/g, '_').toUpperCase()}
+                 </div>
+                 {project.codeSnippets?.map(file => (
+                   <div 
+                     key={file.fileName}
+                     onClick={() => setActiveFile(file)}
+                     className={`px-6 py-1.5 text-sm cursor-pointer flex items-center gap-2 border-l-2 transition-colors ${
+                       activeFile?.fileName === file.fileName 
+                         ? (theme === 'dark' ? 'bg-[#37373d] border-blue-400 text-white' : 'bg-blue-100 border-blue-500 text-slate-900')
+                         : (theme === 'dark' ? 'border-transparent text-gray-400 hover:text-white hover:bg-[#2a2d2e]' : 'border-transparent text-slate-500 hover:text-slate-900 hover:bg-slate-100')
+                     }`}
+                   >
+                      <FileText size={14} className={theme === 'dark' ? 'text-blue-400' : 'text-blue-600'} />
+                      <span className="truncate font-mono text-xs">{file.fileName}</span>
+                   </div>
+                 ))}
+              </div>
+           </div>
+
+           {/* Editor Area */}
+           <div className={`flex-1 flex flex-col min-w-0 ${theme === 'dark' ? 'bg-[#1e1e1e]' : 'bg-white'}`}>
+              {/* Tabs */}
+              {activeFile && (
+                <div className={`flex overflow-x-auto border-b ${theme === 'dark' ? 'bg-[#252526] border-black/20' : 'bg-slate-50 border-slate-200'}`}>
+                   <div className={`px-4 py-2 text-sm border-t-2 flex items-center gap-2 min-w-[120px] ${theme === 'dark' ? 'bg-[#1e1e1e] border-blue-400 text-white' : 'bg-white border-blue-500 text-slate-900'}`}>
+                      <span className="font-mono text-xs">{activeFile.fileName}</span>
+                      <div className="ml-auto opacity-0 hover:opacity-100 cursor-pointer" onClick={onClose}>×</div>
+                   </div>
+                </div>
+              )}
+
+              {/* Code Content */}
+              <div className="flex-1 overflow-auto p-4 custom-scrollbar">
+                 {activeFile ? (
+                   <div className={`font-mono text-sm leading-relaxed whitespace-pre ${theme === 'dark' ? 'text-[#d4d4d4]' : 'text-[#24292e]'}`}>
+                      {isLoading ? (
+                        <div className="flex items-center gap-2 opacity-50">
+                          <div className="animate-spin w-4 h-4 border-2 border-current border-t-transparent rounded-full" />
+                          <span>Loading...</span>
+                        </div>
+                      ) : (
+                        <ReactMarkdown
+                          components={{
+                            code({node, inline, className, children, ...props}) {
+                              return (
+                                <code className={className} {...props}>
+                                  {children}
+                                </code>
+                              )
+                            }
+                          }}
+                        >
+                          {`\`\`\`${activeFile.language}\n${codeContent}\n\`\`\``}
+                        </ReactMarkdown>
+                      )}
+                   </div>
+                 ) : (
+                   <div className="w-full h-full flex items-center justify-center opacity-30">
+                      <Code size={64} />
+                   </div>
+                 )}
+              </div>
+           </div>
+        </div>
+        
+        {/* Status Bar */}
+        <div className={`h-6 flex items-center px-3 text-[10px] gap-4 select-none ${theme === 'dark' ? 'bg-[#007acc] text-white' : 'bg-blue-600 text-white'}`}>
+           <div className="flex items-center gap-1"><Zap size={10} /> master*</div>
+           <div className="flex-1" />
+           <div>Ln {codeContent.split('\n').length || 0}, Col 1</div>
+           <div>UTF-8</div>
+           <div>{activeFile?.language.toUpperCase() || 'TXT'}</div>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+};
+
 const Dashboard = () => {
   const { theme } = useTheme();
 
@@ -900,6 +1101,7 @@ const Dashboard = () => {
 export default function App() {
   const [view, setView] = useState('BOOT'); 
   const [theme, setTheme] = useState('dark');
+  const [codeProject, setCodeProject] = useState(null);
 
   const toggleTheme = () => {
     setTheme(prev => prev === 'dark' ? 'light' : 'dark');
@@ -993,7 +1195,7 @@ export default function App() {
                 >
                   {view === 'DASHBOARD' && <Dashboard />}
                   {view === 'SKILLS' && <SkillConstellation />}
-                  {view === 'INVENTORY' && <Inventory />}
+                  {view === 'INVENTORY' && <Inventory onOpenCode={setCodeProject} />}
                 </motion.div>
               </AnimatePresence>
             </main>
@@ -1001,6 +1203,16 @@ export default function App() {
         )}
         </AnimatePresence>
       </div>
+
+      <AnimatePresence>
+        {codeProject && (
+          <CodeViewer 
+            isOpen={!!codeProject} 
+            onClose={() => setCodeProject(null)} 
+            project={codeProject} 
+          />
+        )}
+      </AnimatePresence>
     </div>
     <style>{`
       .custom-scrollbar::-webkit-scrollbar {

@@ -49,7 +49,7 @@ const SKILL_NODES = [
   { id: 'a3', x: 85, y: 65, label: 'Tools Development', parent: 'a1', category: 'art', level: 'TECH ART', desc: 'Building workflow accelerators: Shader Migration Scripts, Runtime Animation Previews, and a Developer Console for rapid level testing and debugging.', labelPos: 'top' },
   { id: 'a4', x: 90, y: 50, label: 'Asset Creation', parent: 'a1', category: 'art', level: 'TECH ART', desc: 'Modeling and rigging Stylized Characters in Blender, ensuring proper topology for animation and seamless engine integration.', labelPos: 'top' },
   // Design Branch
-  { id: 'd1', x: 50, y: 70, label: 'Asset Creation: 3D Modeling & Rigging ', parent: 'root', category: 'design', desc: 'Mechanic and architecture Design', labelPos: 'top' },
+  { id: 'd1', x: 50, y: 70, label: 'Design & Architecture', parent: 'root', category: 'design', desc: 'Mechanic and architecture Design', labelPos: 'top' },
   { id: 'd2', x: 35, y: 85, label: 'System Design', parent: 'd1', category: 'design', level: 'DESIGN', desc: 'Architecting robust Gameplay Loops and economy systems. Utilizing Excel/VBA simulations to balance numerical progression and combat mechanics.', labelPos: 'top' },
   { id: 'd3', x: 65, y: 85, label: 'Code Architecture', parent: 'd1', category: 'design', level: 'DESIGN', desc: 'Utilizing Design Patterns (Singleton, Observer, State) to create decoupled, maintainable, and scalable codebases for long-term projects.', labelPos: 'top' },
   { id: 'd4', x: 50, y: 90, label: 'Procedural Content Generation (PCG)', parent: 'd1', category: 'design', level: 'DESIGN', desc: 'Developing automated level generation tools, specifically utilizing the Wave Function Collapse (WFC) algorithm for coherent maze structures.', labelPos: 'bottom' },
@@ -130,6 +130,7 @@ This is a solo project. I was responsible for all code architecture, system desi
     `,
     contentCards: [
       { type: 'link', content: 'https://nekokop.itch.io/nekos-war', description: 'View on Itch.io' },
+      { type: 'link', content: '/Design_Statement_Nekos_War.pdf', description: 'View Design Statement' },
       { type: 'image', content: 'img3_1.png' },
       { type: 'image', content: 'img3_2.png' },
     ],

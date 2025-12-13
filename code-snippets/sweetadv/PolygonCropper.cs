@@ -1,6 +1,6 @@
 /*
  * ======================================================================================
- * PROJECT: 2D Polygon Clipper Tool (Sample 2 of 2)
+ * PROJECT: 2D Polygon Clipper Tool
  * AUTHOR: Zhenming Duan
  * ======================================================================================
  * SYSTEM OVERVIEW:

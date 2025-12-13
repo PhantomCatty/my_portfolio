@@ -8,10 +8,17 @@ import {
   Cpu, Code, Terminal, Layers, Shield
 } from 'lucide-react';
 import profilePic from './assets/profile.png';
+import img1_1 from './assets/img1_1.png';
+import img1_2 from './assets/img1_2.png';
+import img2_1 from './assets/img2_1.png';
+import img3_1 from './assets/img3_1.png';
+import img3_2 from './assets/img3_2.png';
 
 const getAssetUrl = (path) => {
   if (!path) return '';
-  if (path.startsWith('http') || path.startsWith('data:')) return path;
+  // If path is already a resolved URL (imported asset) or external link
+  if (path.startsWith('/') || path.startsWith('http') || path.startsWith('data:')) return path;
+  // Fallback for dynamic paths
   return new URL(`./assets/${path}`, import.meta.url).href;
 };
 
@@ -81,8 +88,8 @@ Astalia is my response to this demand. By combining the immediate companionship 
     `,
     contentCards: [
       { type: 'link', content: 'https://phantomcatty.github.io/Astalia_Stellaris/', description: 'View Project Website' },
-      { type: 'image', content: 'img1_1.png' },
-      { type: 'image', content: 'img1_2.png' },
+      { type: 'image', content: img1_1 },
+      { type: 'image', content: img1_2 },
     ],
     previewColor: '#60A5FA' 
   },
@@ -106,7 +113,7 @@ Contract of Fate is a 3D Idle Card RPG featuring anime-style aesthetics and stra
     `,
     contentCards: [
       { type: 'link', content: 'https://play.google.com/store/apps/details?id=com.mover.twmysq&pli=1', description: 'View on Google Play' },
-      { type: 'image', content: 'img2_1.png' },
+      { type: 'image', content: img2_1 },
     ],
     previewColor: '#A78BFA' 
   },
@@ -131,8 +138,8 @@ This is a solo project. I was responsible for all code architecture, system desi
     contentCards: [
       { type: 'link', content: 'https://nekokop.itch.io/nekos-war', description: 'View on Itch.io' },
       { type: 'link', content: './Design_Statement_Nekos_War.pdf', description: 'View Design Statement' },
-      { type: 'image', content: 'img3_1.png' },
-      { type: 'image', content: 'img3_2.png' },
+      { type: 'image', content: img3_1 },
+      { type: 'image', content: img3_2 },
     ],
     codeSnippets: [
       {
@@ -174,8 +181,8 @@ Technical: Architecture & AI
 
     `,
     contentCards: [
-      { type: 'image', content: 'img3_1.png' },
-      { type: 'image', content: 'img3_2.png' },
+      { type: 'image', content: img3_1 },
+      { type: 'image', content: img3_2 },
     ],
     codeSnippets: [
       {

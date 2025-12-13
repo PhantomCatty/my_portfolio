@@ -130,7 +130,7 @@ This is a solo project. I was responsible for all code architecture, system desi
     `,
     contentCards: [
       { type: 'link', content: 'https://nekokop.itch.io/nekos-war', description: 'View on Itch.io' },
-      { type: 'link', content: '/Design_Statement_Nekos_War.pdf', description: 'View Design Statement' },
+      { type: 'link', content: './Design_Statement_Nekos_War.pdf', description: 'View Design Statement' },
       { type: 'image', content: 'img3_1.png' },
       { type: 'image', content: 'img3_2.png' },
     ],

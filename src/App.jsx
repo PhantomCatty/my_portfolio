@@ -160,39 +160,39 @@ This is a solo project. I was responsible for all code architecture, system desi
     ],
     previewColor: '#F472B6' 
   },
-  {
-    id: 'proj_04',
-    name: 'SWEET ADVENTURE',
-    type: '2D Puzzle-Platformer',
-    rarity: 'RARE',
-    role: 'Solo Developer (System Design, Programming, Gameplay)',
-    tag: ['Experimental Mechanics', 'Constraint-based Design', 'Finite State Machine'],
-    platform: 'PC(Win)',
-    desc: 'Sweet Adventure is a comprehensive solo remake of a previous Game Jam prototype, representing a personal exploration into constraint-based mechanics and the intersection of platforming precision with rhythmic flow.',
-    detailedDesc: `
-Moving away from traditional input mapping, I designed a unique "**Cyclic Action System**" where Jump, Dash, and Float abilities are bound to a single execution key. Players must strategically toggle between these states to navigate levels. This project served as a technical and design playground to experiment with restrictive control schemes and modular system architecture.
-Design: The "Cyclic" Mechanic 
-*	Input Constraints & Strategy: Designed a non-traditional control scheme where players lack simultaneous access to movement abilities. Instead, Jump, Dash, and Float are mutually exclusive states that must be cycled through.
-*	Mechanic-Driven Level Design: Constructed puzzle-platforming levels specifically tailored to this switching mechanic, requiring players to plan their input sequence (Rhythm & Flow) rather than relying solely on reflex.
-Technical: Architecture & AI 
-*	Modular Level Management: Implemented a Prefab-based level streaming system to ensure efficient scene management and seamless transitions.
-*	Memory Optimization: Optimized memory usage and Garbage Collection (GC) performance through efficient resource management (e.g., Object Pooling).
-*	FSM AI Behavior: Developed complex Boss AI using Finite State Machines (FSM), allowing for dynamic phase transitions and predictable yet challenging attack patterns.
+//   {
+//     id: 'proj_04',
+//     name: 'SWEET ADVENTURE',
+//     type: '2D Puzzle-Platformer',
+//     rarity: 'RARE',
+//     role: 'Solo Developer (System Design, Programming, Gameplay)',
+//     tag: ['Experimental Mechanics', 'Constraint-based Design', 'Finite State Machine'],
+//     platform: 'PC(Win)',
+//     desc: 'Sweet Adventure is a comprehensive solo remake of a previous Game Jam prototype, representing a personal exploration into constraint-based mechanics and the intersection of platforming precision with rhythmic flow.',
+//     detailedDesc: `
+// Moving away from traditional input mapping, I designed a unique "**Cyclic Action System**" where Jump, Dash, and Float abilities are bound to a single execution key. Players must strategically toggle between these states to navigate levels. This project served as a technical and design playground to experiment with restrictive control schemes and modular system architecture.
+// Design: The "Cyclic" Mechanic 
+// *	Input Constraints & Strategy: Designed a non-traditional control scheme where players lack simultaneous access to movement abilities. Instead, Jump, Dash, and Float are mutually exclusive states that must be cycled through.
+// *	Mechanic-Driven Level Design: Constructed puzzle-platforming levels specifically tailored to this switching mechanic, requiring players to plan their input sequence (Rhythm & Flow) rather than relying solely on reflex.
+// Technical: Architecture & AI 
+// *	Modular Level Management: Implemented a Prefab-based level streaming system to ensure efficient scene management and seamless transitions.
+// *	Memory Optimization: Optimized memory usage and Garbage Collection (GC) performance through efficient resource management (e.g., Object Pooling).
+// *	FSM AI Behavior: Developed complex Boss AI using Finite State Machines (FSM), allowing for dynamic phase transitions and predictable yet challenging attack patterns.
 
-    `,
-    contentCards: [
-      { type: 'image', content: img3_1 },
-      { type: 'image', content: img3_2 },
-    ],
-    codeSnippets: [
-      {
-        fileName: 'PolygonCropper.cs',
-        language: 'csharp',
-        path: '/code-snippets/sweetadv/PolygonCropper.cs'
-      }
-    ],
-    previewColor: '#34D399' 
-  },
+//     `,
+//     contentCards: [
+//       { type: 'image', content: img3_1 },
+//       { type: 'image', content: img3_2 },
+//     ],
+//     codeSnippets: [
+//       {
+//         fileName: 'PolygonCropper.cs',
+//         language: 'csharp',
+//         path: '/code-snippets/sweetadv/PolygonCropper.cs'
+//       }
+//     ],
+//     previewColor: '#34D399' 
+//   },
 ];
 
 /* -------------------------------------------------------------------------- */
